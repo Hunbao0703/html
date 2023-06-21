@@ -5,7 +5,7 @@
         <link rel = "icon" type = "image/png" href = "pic/toteem.png">
     </head>
 </html>
-<?
+<?php
     session_start();
 
 
@@ -21,11 +21,14 @@
     $db_select = mysqli_select_db($conn, $datebase) or die("資料庫選擇失敗");
     $username = $_SESSION['username'];
     $shop_cost = 0;
-    $id = $_GET['shopcarid'];
-    $result = mysqli_query($conn, "DELETE FROM shopcar WHERE id = '$id'");
+
+    $result = mysqli_query($conn, "DELETE FROM shopcar WHERE username = '$username'");
 
     if($result){
-        echo '<script>window.location.href = "shopcar.php";</script>';
+
+    
+        echo '<script>alert("已清空購物車");</script>';
+        echo '<script>window.location.href = "index.php";</script>';
     }
 
 ?>

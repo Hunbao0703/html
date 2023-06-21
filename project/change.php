@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>新增電腦硬體</title>
+        <title>變更/刪除</title>
         <style>*{font-family:"微軟正黑體";}</style>
         <link rel="icon" type="image/png" href="pic/toteem.png">
     </head>
@@ -47,10 +47,13 @@
             mysqli_query($conn, "SET CHARACTER SET 'utf8'");
             mysqli_query($conn, "SET NAMES 'utf8'");
         ?>
-        <h1 align='center'>新增電腦硬體</h1>
-        <form action="db_add_item.php" method="get" align='center'>
-            要新增的物品:
-            <select name="add_item" id="add_item">
+
+
+
+        <h1 align='center'>變更/刪除 商品</h1>
+        <form action="db_change.php" method="get" align='center'>
+            要變更或刪除的商品: <br>
+            <select name="item" id="item">
                 <?  
                     if ($result && mysqli_num_rows($result) > 0) {
                         for ($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
@@ -58,7 +61,8 @@
                             if($project_name == 'project_passwd'){
                                 continue;
                             }
-                            echo '<option value="' . $project_name . '">';
+
+                            echo '<option disabled>';
                             if($project_name == 'project_case'){
                                 echo "機殼";
                             }
@@ -81,27 +85,64 @@
                                 echo "CPU";
                             }
                             echo '</option>';
+                            
+                            $result2 = mysqli_query($conn, "SELECT * FROM $project_name");
+
+
+                            for($x = 0;$row2 = mysqli_fetch_assoc($result2);$x++){
+                                // DELETE FROM $project_name WHERE id = $item_id;
+                                $item_name = $row2['name'];
+                                $item_id = $row2['id'];
+                                echo '<option value="' . $project_name . '/' . $item_id . '">　　　឵឵' . $item_name . '</option>';
+                            }
                         }
                     }
                 
-                ?>
+                ?>  
             </select>
             <br><br>
 
-            名稱:
-            <input type="text" name="add_name" placeholder="名稱" required>
+            <input type="radio" name="changes" id="rA" onclick="showInput()">變更
+            <input type="radio" name="changes" id="rB" onclick="showInput()">刪除
             <br><br>
-
-            價格:
-            <input type="text" name="add_cost" placeholder="價格" required>
-            <br><br>
-            
-            <div style="text-align: center;">
-                <input type="submit" value="新增"><br><br>
-                <input type="reset" value="重置列表">
-                <button type="button" onclick="window.location.href='index.php'">回到商品列表</button>
-                <button type="button" onclick="window.location.href='change.php'">變更/刪除商品</button>
+            <div id="change" style="display: none;">
+                商品名<input type="text" name="name" placeholder="未變更可不填"><br><br>
+                價格<input type="text" name="cost" placeholder="未變更可不填"><br><br>
+                <input type="submit" value="變更" name="changeordelete" >
+                
             </div>
+            <div id="delete" style="display: none;">
+                <input type="submit" value="刪除" name="changeordelete">
+                
+            </div>
+            <br>
+            <input type="button" onclick="window.location.href='index.php'" value="回商品列表">
+            <input type="button" onclick="window.location.href='add_item.php'" value="新增商品">
+            
+            <script>
+                function showInput(){
+                    var changediv = document.getElementById('change');
+                    var deletediv = document.getElementById('delete');
+
+                    var radioA = document.getElementById('rA');
+                    var radioB = document.getElementById('rB');
+
+                    if(radioA.checked){
+                        changediv.style.display = "block";
+                        deletediv.style.display = "none";
+                    }
+                    else if(radioB.checked){
+                        changediv.style.display = "none";
+                        deletediv.style.display = "block";
+                    }
+                }
+
+            </script>
+                
+
+
+
+
         </form>
     </body>
 </html>

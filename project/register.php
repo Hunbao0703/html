@@ -1,11 +1,24 @@
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta charset="utf-8">
-        <title>電腦硬體商品列表</title>
+        <title>註冊</title>
         <style>*{font-family:"微軟正黑體";}</style>
+        <link rel="icon" type="image/png" href="pic/toteem.png">
     </head>
     <body>
+        <?php
+            session_start();
+
+
+            if (isset($_SESSION['username'])) {
+                echo '<script>alert("你已登錄!");</script>';
+                echo '<script>window.location.href = "index.php";</script>';
+                exit;
+            }
+
+        ?>
         
         <form action="db_register.php" method="post" align='center'>
             <h1>註冊</h1>
@@ -15,6 +28,7 @@
             請輸入驗證碼：<input type="text" name="check_number" size="3" required>
             <b> </b>
         <?php
+            //驗證碼
             $n = array(-1, -1, -1);
             $check = 0;
             while(1){

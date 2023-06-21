@@ -1,0 +1,29 @@
+@charset "UTF-8";
+	
+	.bg_pink{ /* (粉紅背景)*/
+		background-color: #FFC1E0;
+	} 
+
+	.bg_blue{ /*(淺藍背景)*/
+		background-color: #ACD6FF;
+	}
+
+	.txt_red{/*(紅色字)*/
+		color: red;
+	}
+
+	.txt_green{/*(綠色字)*/
+		color:green;
+	}
+
+	.txt_center{/*(置中)*/
+		text-align: center;
+	}
+
+	.txt_right{/*(靠右)*/
+		text-align: right;
+	}
+
+	#txt_shadow{/*(陰影)*/
+		text-shadow:3px 3px 3px #000;
+	}
