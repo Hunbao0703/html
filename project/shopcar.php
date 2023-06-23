@@ -24,11 +24,12 @@
         </div>
         <br>
 
-        <div style="text-align: center;">
-            <h1>購物車</h1>
-            <button onclick = "window.location.href = 'index.php'">回到商品列表</button>
+        <h1 align='center'>購物車</h1>
+        <div style="text-align: right;">
+            <button onclick = "window.location.href = 'db_clear_shopcar.php'">清空購物車</button>
         </div>
-        <br>
+        
+       
 
         <?
             header("Content-Type:text/html; charset = 'utf-8'");
@@ -38,7 +39,7 @@
             mysqli_query($conn, "SET CHARACTER SET 'utf8'");
             mysqli_query($conn, "SET NAMES 'utf8'");
             $username = $_SESSION['username'];
-
+            
             $shop_cost = 0;
             $result = mysqli_query($conn, "SELECT * FROM shopcar WHERE username = '$username'");
             if(mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS count FROM shopcar WHERE username = '$username'"))['count'] == '0'){
@@ -47,7 +48,7 @@
 
             }
             echo '<table align = "center" border = 1>';
-            echo "<tr><td> </td><td>移除</td><td><b>cpu</b></td><td><b>case</b></td><td><b>graphics</b></td><td><b>motherboard</b></td><td><b>ram</b></td><td><b>ssd</b></td><td><b>power</b></td><td><b>cost</b></td></tr>";
+            echo "<tr><td style='width: 1%;'> </td><td style='width: 2%;'>移除</td><td style='width: 13.5%;'><b>cpu</b></td><td style='width: 13.5%;'><b>case</b></td><td style='width: 13.5%;'><b>graphics</b></td><td style='width: 13.5%;'><b>motherboard</b></td><td style='width: 13.5%;'><b>ram</b></td><td style='width: 13.5%;'><b>ssd</b></td><td style='width: 13.5%;'><b>power</b></td><td style='width: 3%;'><b>cost</b></td></tr>";
             if ($result && mysqli_num_rows($result) > 0) {
                 for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
                     if($i % 3 == 1){
@@ -68,14 +69,19 @@
 
                     $id = $row['id'];
                     $total = 0;
-                    echo "<td bgcolor='white'>" . $i . "</td>";
-                    echo "<td bgcolor='white'><button type='button' onclick=\"window.location.href='db_delete.php?shopcarid=$id'\">移除</button></td>";
+                    echo "<td bgcolor='white' align='center'>" . $i . "</td>";
+                    echo "<td bgcolor='white' align='center'><button type='button' onclick=\"window.location.href='db_delete.php?shopcarid=$id'\">移除</button></td>";
                     for($j = 0;$j < 7;$j++){
                         $total += mysqli_fetch_assoc(mysqli_query($conn, "SELECT cost FROM $items[$j] WHERE name = '$item[$j]'"))['cost'];
-                        echo "<td>" .$item[$j] . "</td>";
+                        if($item[$j] == ''){
+                            echo "<td align='center'>未選擇</td>";
+                        }
+                        else{
+                            echo "<td align='center'>" .$item[$j] . "</td>";
+                        }
                     }
                     $shop_cost += $total;
-                    echo "<td>" . $total . "</td>";
+                    echo "<td align='center'>$" . $total . "</td>";
                     echo "</tr>";
 
                 }
@@ -85,7 +91,7 @@
         ?>
 
         <div style = "text-align: center;">
-            <button type = "button" onclick = "window.location.href = 'db_clear_shop.php'">清空購物車</button>
+            <button type = "button" onclick = "window.location.href = 'index.php'">回商品列表</button>
         </div>
         <h1 align = 'center'>購物車總金額: $<?echo $shop_cost;?></h1>
     </body>

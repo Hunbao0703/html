@@ -93,7 +93,8 @@
                                 // DELETE FROM $project_name WHERE id = $item_id;
                                 $item_name = $row2['name'];
                                 $item_id = $row2['id'];
-                                echo '<option value="' . $project_name . '/' . $item_id . '">　　　឵឵' . $item_name . '</option>';
+                                $item_cost = $row2['cost'];
+                                echo '<option value="' . $project_name . '/' . $item_id . '">　　　឵឵' . $item_name . " | $" . $item_cost . '</option>';
                             }
                         }
                     }
