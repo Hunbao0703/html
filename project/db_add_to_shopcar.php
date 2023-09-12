@@ -32,6 +32,14 @@
             mysqli_query($conn, "SET CHARACTER SET 'utf8'");
             mysqli_query($conn, "SET NAMES 'utf8'");
 
+
+            if($_GET['motherboard'] == '' && $_GET['cpu'] == '' && $_GET['ram'] == '' && $_GET['ssd'] == '' && $_GET['graphics'] == '' && $_GET['case'] == '' && $_GET['power'] == ''){
+                echo "<script> alert('很抱歉 您未選擇任何商品');";
+                echo "window.location.href = 'index.php';</script>";
+                exit;
+            }
+
+
             $motherboard = explode("//", $_GET['motherboard']);
             $cpu = explode("//", $_GET['cpu']);
             $ram = explode("//", $_GET['ram']);
@@ -40,7 +48,8 @@
             $case = explode("//", $_GET['case']);
             $power = explode("//", $_GET['power']);
             $username = $_SESSION['username'];
-
+            
+            
             
 
             $motherboard_cost = mysqli_fetch_assoc(mysqli_query($conn, "SELECT cost FROM project_motherboard WHERE name = '$motherboard[0]'"))['cost'];
