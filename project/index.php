@@ -16,7 +16,7 @@
                 echo '<h2 style = "display: inline;">遊客你好 你尚未登陸 </h2>';
                 echo '<button onclick = "window.location.href = \'login.php\'">登陸</button>';
                 echo "</div>";
-                //echo '<script>alert("尚未登陸 請登陸後再試");</script>';
+                //echo '<script>alert("尚未登陸 請登陸後再sssssss試");</script>';
                 //echo '<script>window.location.href = "login.php";</script>';
                 
             }
